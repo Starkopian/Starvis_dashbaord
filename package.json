@@ -1,0 +1,32 @@
+{
+  "name": "@starvis/web-redesign",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --webpack --hostname 127.0.0.1 --port 3200",
+    "build": "next build --webpack",
+    "start": "next start --hostname 127.0.0.1 --port 3200",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@libsql/client": "0.18.0",
+    "@react-three/fiber": "9.8.1",
+    "lucide-react": "1.55.0",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/three": "0.186.0",
+    "typescript": "5.9.3",
+    "vitest": "4.0.3"
+  }
+}
