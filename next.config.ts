@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
 const config: NextConfig = {
   poweredByHeader: false,
   images: {
@@ -24,3 +25,7 @@ const config: NextConfig = {
   },
 };
 export default config;
+
+// Lets `next dev` use local Cloudflare binding emulation without changing the
+// production Node.js runtime or the site's normal development workflow.
+initOpenNextCloudflareForDev();

@@ -1,4 +1,7 @@
 *.tsbuildinfo
 .next/
+.open-next/
+.wrangler/
+cloudflare-env.d.ts
 node_modules/
 artifacts/

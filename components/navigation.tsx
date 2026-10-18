@@ -25,6 +25,7 @@ export function Navigation() {
     ['Alerts', '/features/alerts', BellRing],
     ['Commands', '/commands', Command],
     ['Docs', '/docs', Sparkles],
+    ['Dashboard', '/dashboard', ShieldCheck],
   ] as const;
   return (
     <header className="site-header">
