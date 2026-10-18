@@ -1,10 +1,7 @@
 import 'server-only';
 import { cookies } from 'next/headers';
 import { webOrigin } from '../site';
-import { SessionStore, canManage } from './security';
-
-const shared = globalThis as typeof globalThis & { starvisDashboardSessions?: SessionStore };
-export const sessions = (shared.starvisDashboardSessions ??= new SessionStore());
+import { readDashboardSession, canManage } from './security';
 export const cookieName = () =>
   webOrigin().startsWith('https:') ? '__Host-starvis-session' : 'starvis-session';
 export const cookieOptions = () => ({
@@ -37,8 +34,14 @@ export interface ManagedGuild {
   permissions: string;
 }
 export async function managedGuilds(): Promise<ManagedGuild[] | null> {
-  const session = sessions.get((await cookies()).get(cookieName())?.value ?? '');
+  let session;
+  try {
+    session = readDashboardSession(oauthConfig().secret, (await cookies()).get(cookieName())?.value ?? '');
+  } catch {
+    return null;
+  }
   if (!session) return null;
   const guilds = await discord<ManagedGuild[]>('/users/@me/guilds?limit=200', session.token);
   return guilds.filter(canManage);
 }
+
