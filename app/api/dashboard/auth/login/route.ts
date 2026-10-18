@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
-import { oauthConfig, sessions, cookieOptions } from '@/lib/dashboard/server';
+import { oauthConfig, cookieOptions } from '@/lib/dashboard/server';
+import { beginOAuthState } from '@/lib/dashboard/security';
 export const runtime = 'nodejs';
 export async function GET() {
   try {
     const config = oauthConfig();
-    const state = sessions.begin();
+    const { state, cookie } = beginOAuthState(config.secret);
     const url = new URL('https://discord.com/oauth2/authorize');
     url.search = new URLSearchParams({
       client_id: config.clientId,
@@ -15,7 +16,7 @@ export async function GET() {
     }).toString();
     const response = NextResponse.redirect(url);
     response.headers.set('Cache-Control', 'no-store');
-    response.cookies.set('starvis-oauth-state', state, { ...cookieOptions(), maxAge: 300 });
+    response.cookies.set('starvis-oauth-state', cookie, { ...cookieOptions(), maxAge: 300 });
     return response;
   } catch {
     return NextResponse.json(
@@ -26,3 +27,4 @@ export async function GET() {
     );
   }
 }
+
