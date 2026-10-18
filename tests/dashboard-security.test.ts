@@ -15,7 +15,7 @@ describe('dashboard security boundary', () => {
     expect(readDashboardSession(secret, `${cookie}tampered`)).toBeNull();
     expect(readDashboardSession('wrong-secret', cookie)).toBeNull();
   });
-  it('requires browser-bound one-use unexpired OAuth state', () => {
+  it('requires browser-bound, unexpired OAuth state', () => {
     const secret = 'test-secret';
     const { state, cookie } = beginOAuthState(secret);
     expect(consumeOAuthState(secret, state, 'another-browser')).toBe(false);
